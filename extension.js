@@ -1,59 +1,135 @@
-const config = {
-    tabTitle: "Unread Badge",
-    settings: [
-        {
-            id: "ui-tag",
-            name: "Tag to monitor",
-            description: "Roam Research tag for which you want an unread badge",
-            action: { type: "input", placeholder: "" },
-        },
-        {
-            id: "ui-menu",
-            name: "Add tag to menu",
-            description: "Add a button for tag and badge to the left side bar menu. If switched off, this extension will look in Shortcuts for a link to the tag.",
-            action: { type: "switch" },
-        },
-        {
-            id: "ui-offset",
-            name: "Count correction offset",
-            description: "If your count is too high, use this number to correct",
-            action: { type: "input", placeholder: "0" },
-        },
-        {
-            id: "ui-textcolour",
-            name: "Badge text colour",
-            description: "Colour of badge text",
-            action: { type: "input", placeholder: "white" },
-        },
-        {
-            id: "ui-bgcolour",
-            name: "Badge background colour",
-            description: "Colour of badge background",
-            action: { type: "input", placeholder: "red" },
-        },
-        {
-            id: "ui-freq",
-            name: "Frequency to update unread count",
-            description: "How often to update in minutes",
-            action: { type: "input", placeholder: "5" },
-        }
-    ]
-};
+var uiTag, uiOffset, uiTextColour, uiBGColour, uiFreq, key;
+var uiMenu = false;
+var inboxInterval = 0;
 
 export default {
     onload: ({ extensionAPI }) => {
+        const config = {
+            tabTitle: "Unread Badge",
+            settings: [
+                {
+                    id: "ui-tag",
+                    name: "Tag to monitor",
+                    description: "Roam Research tag for which you want an unread badge",
+                    action: {
+                        type: "input", placeholder: "",
+                        onChange: (evt) => { setUiTag(evt) }
+                    },
+                },
+                {
+                    id: "ui-menu",
+                    name: "Add tag to menu",
+                    description: "Add a button for tag and badge to the left side bar menu. If switched off, this extension will look in Shortcuts for a link to the tag.",
+                    action: {
+                        type: "switch",
+                        onChange: (evt) => { setUiMenu(evt); }
+                    },
+                },
+                {
+                    id: "ui-offset",
+                    name: "Count correction offset",
+                    description: "If your count is too high, use this number to correct",
+                    action: { type: "input", placeholder: "0" },
+                },
+                {
+                    id: "ui-textcolour",
+                    name: "Badge text colour",
+                    description: "Colour of badge text",
+                    action: { type: "input", placeholder: "white" },
+                },
+                {
+                    id: "ui-bgcolour",
+                    name: "Badge background colour",
+                    description: "Colour of badge background",
+                    action: { type: "input", placeholder: "red" },
+                },
+                {
+                    id: "ui-freq",
+                    name: "Frequency to update unread count",
+                    description: "How often to update in minutes",
+                    action: { type: "input", placeholder: "5" },
+                }
+            ]
+        };
         extensionAPI.settings.panel.create(config);
+        uiTag = extensionAPI.settings.get("ui-tag");
+        function setUiTag(evt) {
+            uiTag = evt.target.value;
+        }
 
-        var uiTag, uiOffset, uiTextColour, uiBGColour, uiFreq, key;
-        var uiMenu = false;
-        breakme: {
-            if (extensionAPI.settings.get("ui-tag")) {
-                uiTag = extensionAPI.settings.get("ui-tag");
-            } else {
-                key = "tag";
-                sendConfigAlert(key);
-                break breakme;
+        async function setUiMenu(evt) {
+            uiMenu = evt.target.checked;
+            if (uiMenu == true) { // make a menu div & destroy any shortcut badges
+                if (document.getElementById('unreadBadge')) {
+                    document.getElementById('unreadBadge').remove();
+                }
+                if (!document.getElementById(uiTag + 'Div')) {
+                    var div = document.createElement('unreadDiv');
+                    div.classList.add('log-button');
+                    div.innerHTML = uiTag;
+                    div.id = 'unreadDiv';
+                    div.onclick = goToPage;
+                    var span = document.createElement('span');
+                    span.classList.add('bp3-icon', 'bp3-icon-home', 'icon');
+                    div.prepend(span);
+                    var sidebarcontent = document.querySelector("#app > div.roam-body > div.roam-app > div.roam-sidebar-container.noselect > div"),
+                        sidebartoprow = sidebarcontent.childNodes[2];
+                    if (sidebarcontent && sidebartoprow) {
+                        sidebartoprow.parentNode.insertBefore(div, sidebartoprow.nextSibling);
+                    }
+                }
+                checkInbox();
+            } else { // check for and destroy any menu divs
+                if (document.getElementById('unreadDiv')) {
+                    document.getElementById('unreadDiv').remove();
+                }
+                checkInbox();
             }
+        }
+
+        async function checkInbox() {
+            var shortcutDIV = undefined;
+            let unreadCount = window.roamAlphaAPI
+                .q(
+                    `[:find ?u :where [?r :block/uid ?u] [?r :block/refs ?p] [?p :node/title "${uiTag}"]]`
+                )
+                .map((s) => s[0]).length - uiOffset;
+            console.info(unreadCount);
+            if (unreadCount > 0) {
+                if (uiMenu == false) {
+                    var shortcutLinks = document.querySelector(".starred-pages").getElementsByTagName('a');
+                    for (var i = 0; i < shortcutLinks.length; i++) {
+                        if (shortcutLinks[i].outerText == uiTag) {
+                            shortcutDIV = shortcutLinks[i].lastChild;
+                        }
+                    }
+                    if (shortcutDIV == "undefined") {
+                        alert("Please make sure that you have made a shortcut to the tag you want to monitor!");
+                    }
+                    var shortcutLinks = document.querySelector(".starred-pages").getElementsByTagName('a');
+                }
+                var span = document.createElement('span');
+                span.id = "unreadBadge";
+                span.innerHTML = " " + unreadCount;
+                if (!document.getElementById('unreadBadge')) {
+                    if (uiMenu == true) {
+                        span.style = 'display: inline; margin-left: 5px; color: ' + uiTextColour + '; background-color: ' + uiBGColour + '; border-radius: 50%; padding-left: 2px; padding-right: 3px;';
+                        document.getElementById("unreadDiv").appendChild(span);
+                    } else {
+                        span.style = 'display: inline; margin-left: 5px; color: ' + uiTextColour + '; background-color: ' + uiBGColour + '; border-radius: 50%; padding-right: 3px;';
+                        shortcutDIV.appendChild(span);
+                    }
+                } else {
+                    document.getElementById("unreadBadge").innerHTML = unreadCount;
+                }
+            } else {
+                if (document.getElementById('unreadBadge')) {
+                    document.getElementById('unreadBadge').style = "display: none;";
+                }
+            }
+        }
+
+        breakme: {
             if (extensionAPI.settings.get("ui-offset")) {
                 const regex = /^\d{1,2}$/;
                 if (regex.test(extensionAPI.settings.get("ui-offset"))) {
@@ -86,85 +162,27 @@ export default {
                     break breakme;
                 }
             } else {
-                uiFreq = "3";
-            }
-
-            if (extensionAPI.settings.get("ui-menu") == true) { // make a menu div
-                uiMenu = true;
-                if (!document.getElementById(uiTag + 'Div')) {
-                    var div = document.createElement('div');
-                    div.classList.add('log-button');
-                    div.innerHTML = uiTag;
-                    div.id = 'unreadDiv';
-                    div.onclick = goToPage;
-                    var span = document.createElement('span');
-                    span.classList.add('bp3-icon', 'bp3-icon-home', 'icon');
-                    div.prepend(span);
-                    var sidebarcontent = document.querySelector("#app > div.roam-body > div.roam-app > div.roam-sidebar-container.noselect > div"),
-                        sidebartoprow = sidebarcontent.childNodes[2];
-                    if (sidebarcontent && sidebartoprow) {
-                        sidebartoprow.parentNode.insertBefore(div, sidebartoprow.nextSibling);
-                    }
-                }
-            }
-
-            async function goToPage(e) {
-                var shiftButton = false;
-                if (e.shiftKey) {
-                    shiftButton = true;
-                }
-                let uid = await window.roamAlphaAPI.q(`[:find ?uid :where [?e :node/title "${uiTag}"][?e :block/uid ?uid ] ]`)[0].toString();
-                if (shiftButton) {
-                    window.roamAlphaAPI.ui.rightSidebar.addWindow({ window: { type: 'outline', 'block-uid': uid } });
-                } else {
-                    window.roamAlphaAPI.ui.mainWindow.openBlock({ block: { uid: uid } });
-                }
-            }
-
-            async function checkInbox() {
-                let unreadCount = window.roamAlphaAPI
-                    .q(
-                        `[:find ?u :where [?r :block/uid ?u] [?r :block/refs ?p] [?p :node/title "${uiTag}"]]`
-                    )
-                    .map((s) => s[0]).length - uiOffset;
-                console.info(unreadCount);
-                if (unreadCount > 0) {
-                    if (uiMenu == false) {
-                        var shortcutLinks = document.querySelector(".starred-pages").getElementsByTagName('a');
-                        for (var i = 0; i < shortcutLinks.length; i++) {
-                            if (shortcutLinks[i].outerText == uiTag) {
-                                var shortcutDIV = shortcutLinks[i].lastChild;
-                            }
-                        }
-                        var shortcutLinks = document.querySelector(".starred-pages").getElementsByTagName('a');
-                        console.info(shortcutLinks)
-                    }
-                    var span = document.createElement('span');
-                    span.id = "unreadBadge";
-                    span.innerHTML = " " + unreadCount;
-                    if (!document.getElementById('unreadBadge')) {
-                        if (uiMenu == true) {
-                            span.style = 'display: inline; margin-left: 5px; color: ' + uiTextColour + '; background-color: ' + uiBGColour + '; border-radius: 50%; padding-left: 2px; padding-right: 3px;';
-                            document.getElementById("unreadDiv").appendChild(span);
-                        } else {
-                            span.style = 'display: inline; margin-left: 5px; color: ' + uiTextColour + '; background-color: ' + uiBGColour + '; border-radius: 50%; padding-right: 3px;';
-                            shortcutDIV.appendChild(span);
-                        }
-                    } else {
-                        document.getElementById("unreadBadge").innerHTML = unreadCount;
-                    }
-                } else {
-                    if (document.getElementById('unreadBadge')) {
-                        document.getElementById('unreadBadge').style = "display: none;";
-                    }
-                }
+                uiFreq = "5";
             }
 
             checkInbox();
-            try { if (window.inboxInterval > 0) clearInterval(window.inboxInterval) } catch (e) { }
-            window.inboxInterval = setInterval(async () => {
+            try { if (inboxInterval > 0) clearInterval(inboxInterval) } catch (e) { }
+            inboxInterval = setInterval(async () => {
                 await checkInbox()
             }, uiFreq * 60000);
+        }
+
+        async function goToPage(e) {
+            var shiftButton = false;
+            if (e.shiftKey) {
+                shiftButton = true;
+            }
+            let uid = await window.roamAlphaAPI.q(`[:find ?uid :where [?e :node/title "${uiTag}"][?e :block/uid ?uid ] ]`)[0].toString();
+            if (shiftButton) {
+                window.roamAlphaAPI.ui.rightSidebar.addWindow({ window: { type: 'outline', 'block-uid': uid } });
+            } else {
+                window.roamAlphaAPI.ui.mainWindow.openBlock({ block: { uid: uid } });
+            }
         }
     },
     onunload: () => {
@@ -174,6 +192,7 @@ export default {
         if (document.getElementById('unreadBadge')) {
             document.getElementById('unreadBadge').remove();
         }
+        clearInterval(inboxInterval);
     }
 }
 
