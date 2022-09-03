@@ -55,7 +55,7 @@ export default {
         uiTag = extensionAPI.settings.get("ui-tag");
         uiMenu = extensionAPI.settings.get("ui-menu");
         createDIVs();
-        
+
         function setUiTag(evt) {
             uiTag = evt.target.value;
         }
@@ -100,7 +100,7 @@ export default {
                     `[:find ?u :where [?r :block/uid ?u] [?r :block/refs ?p] [?p :node/title "${uiTag}"]]`
                 )
                 .map((s) => s[0]).length - uiOffset;
-            console.info(unreadCount);
+           // console.info(unreadCount);
             if (unreadCount > 0) {
                 if (uiMenu == false) {
                     var shortcutLinks = document.querySelector(".starred-pages").getElementsByTagName('a');
