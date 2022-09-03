@@ -53,12 +53,18 @@ export default {
         };
         extensionAPI.settings.panel.create(config);
         uiTag = extensionAPI.settings.get("ui-tag");
+        uiMenu = extensionAPI.settings.get("ui-menu");
+        createDIVs();
+        
         function setUiTag(evt) {
             uiTag = evt.target.value;
         }
-
         async function setUiMenu(evt) {
             uiMenu = evt.target.checked;
+            createDIVs();
+        }
+
+        function createDIVs() {
             if (uiMenu == true) { // make a menu div & destroy any shortcut badges
                 if (document.getElementById('unreadBadge')) {
                     document.getElementById('unreadBadge').remove();
