@@ -1,4 +1,6 @@
-This extension allows you to define a tag or page within Roam Research for which you want to monitor the number of Linked References. This can be useful if you import data from other sources, like my Quick Capture with Todoist extension, for example, or Readwise sync. Processing that information for its ongoing relevance and relationship with other information in your graph is almost as important as capturing it!
+This extension allows you to define a tag or page within Roam Research for which you want to monitor the number of Linked References. This can be useful if you import data from other sources, like my Quick Capture with Todoist extension, for example, or with Readwise sync. 
+
+Processing that information for its ongoing relevance and relationship with other information in your graph is almost as important as capturing it! When you process that item, remove the tag you're monitoring and it will no longer contribute to the count of 'unread' items.
 
 The extension will monitor how many linked refs you have that you haven't 'processed' and display a badge with an 'unread' number. You can choose whether the extension creates a menu item for the left sidebar, or whether it looks for a shortcut.
 
@@ -16,7 +18,7 @@ If you choose shortcut option, make sure you've starred that page as a shortcut 
 
 You can configure the background colour, text colour and frequency the script checks for updated unread count in minutes.
 
-Finally, you can offset the unread count if you don't want to include references to this tag from certain pages. Similar to using the inbuilt RR filter option, if there are some pages that won't be relevant to the count, you can set an offset to be subtracted from the count.
+Finally, you can offset the unread count if you don't want to include references to this tag from certain pages. Similar to using the inbuilt Roam Research filter option, if there are some pages that won't be relevant to the count, you can set an offset to be subtracted from the count.
 
 ![image](https://user-images.githubusercontent.com/6857790/187310923-0519dfea-5e41-4889-bbd6-4cb78d411562.png)
 
