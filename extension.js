@@ -22,7 +22,7 @@ export default {
                     description: "Add a button for tag and badge to the left side bar menu. If switched off, this extension will look in Shortcuts for a link to the tag.",
                     action: {
                         type: "switch",
-                        onChange: (evt) => { setUiMenu(evt); }
+                        onChange: (evt) => { setUiMenu(evt) }
                     },
                 },
                 {
@@ -59,7 +59,7 @@ export default {
         function setUiTag(evt) {
             uiTag = evt.target.value;
         }
-        async function setUiMenu(evt) {
+        function setUiMenu(evt) {
             uiMenu = evt.target.checked;
             createDIVs();
         }
@@ -119,10 +119,10 @@ export default {
                 span.innerHTML = " " + unreadCount;
                 if (!document.getElementById('unreadBadge')) {
                     if (uiMenu == true) {
-                        span.style = 'display: inline; margin-left: 5px; color: ' + uiTextColour + '; background-color: ' + uiBGColour + '; border-radius: 50%; padding-left: 2px; padding-right: 3px;';
+                        span.style = 'color: ' + uiTextColour + '; background-color: ' + uiBGColour + '; ';
                         document.getElementById("unreadDiv").appendChild(span);
                     } else {
-                        span.style = 'display: inline; margin-left: 5px; color: ' + uiTextColour + '; background-color: ' + uiBGColour + '; border-radius: 50%; padding-right: 3px;';
+                        span.style = 'color: ' + uiTextColour + '; background-color: ' + uiBGColour + '; ';
                         shortcutDIV.appendChild(span);
                     }
                 } else {

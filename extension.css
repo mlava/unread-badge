@@ -1,0 +1,22 @@
+#unreadDiv #unreadBadge {
+    display: inline;
+    margin-left: 8px;
+    border-radius: 50%;
+    padding-left: 2px;
+    padding-right: 4px;
+    min-width: 21px !important;
+    text-align: center;
+    line-height: 1.3;
+}
+
+.starred-pages a #unreadBadge {
+    display: inline-block;
+    margin-left: 7px;
+    border-radius: 50%;
+    padding-left: 1px;
+    padding-right: 3px;
+    min-width: 1.3em;
+    min-height: 1.3em;
+    text-align: center;
+    line-height: 1.3;
+}
