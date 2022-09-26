@@ -16,7 +16,7 @@ If you choose shortcut option, make sure you've starred that page as a shortcut 
 
 ![image](https://user-images.githubusercontent.com/6857790/187310681-7e6d6986-bf2b-4841-9c3e-a48f40b13980.png)
 
-You can configure the background colour, text colour and frequency the script checks for updated unread count in minutes.
+You can configure the background colour, text colour and frequency the script checks for updated unread count in minutes. For the menu item you can configure which of the blueprintjs icons to use from the list at: https://blueprintjs.com/docs/#icons
 
 Finally, you can offset the unread count if you don't want to include references to this tag from certain pages. Similar to using the inbuilt Roam Research filter option, if there are some pages that won't be relevant to the count, you can set an offset to be subtracted from the count.
 
