@@ -1,4 +1,4 @@
-var uiTag, uiOffset, uiTextColour, uiBGColour, uiFreq, key;
+var uiTag, uiOffset, uiTextColour, uiBGColour, uiFreq, uiMenuIcon, key;
 var uiMenu = false;
 var inboxInterval = 0;
 
@@ -23,6 +23,15 @@ export default {
                     action: {
                         type: "switch",
                         onChange: (evt) => { setUiMenu(evt) }
+                    },
+                },
+                {
+                    id: "ui-menuicon",
+                    name: "Icon for menu tag",
+                    description: "Which icon do you want to use if added to left sidebar menu? Lower case icon name from https://blueprintjs.com/docs/#icons.",
+                    action: {
+                        type: "input", placeholder: "inbox",
+                        onChange: (evt) => { setUiMenuIcon(evt) }
                     },
                 },
                 {
@@ -54,6 +63,11 @@ export default {
         extensionAPI.settings.panel.create(config);
         uiTag = extensionAPI.settings.get("ui-tag");
         uiMenu = extensionAPI.settings.get("ui-menu");
+        if (extensionAPI.settings.get("ui-menuicon")) {
+            uiMenuIcon = extensionAPI.settings.get("ui-menuicon");
+        } else {
+            uiMenuIcon = "inbox";
+        }
         createDIVs();
 
         function setUiTag(evt) {
@@ -62,6 +76,9 @@ export default {
         function setUiMenu(evt) {
             uiMenu = evt.target.checked;
             createDIVs();
+        }
+        function setUiMenuIcon(evt) {
+            uiMenuIcon = evt.target.value;
         }
 
         function createDIVs() {
@@ -76,7 +93,7 @@ export default {
                     div.id = 'unreadDiv';
                     div.onclick = goToPage;
                     var span = document.createElement('span');
-                    span.classList.add('bp3-icon', 'bp3-icon-home', 'icon');
+                    span.classList.add('bp3-icon', 'bp3-icon-' + uiMenuIcon, 'icon');
                     div.prepend(span);
                     var sidebarcontent = document.querySelector("#app > div.roam-body > div.roam-app > div.roam-sidebar-container.noselect > div"),
                         sidebartoprow = sidebarcontent.childNodes[2];
@@ -100,7 +117,7 @@ export default {
                     `[:find ?u :where [?r :block/uid ?u] [?r :block/refs ?p] [?p :node/title "${uiTag}"]]`
                 )
                 .map((s) => s[0]).length - uiOffset;
-           // console.info(unreadCount);
+            // console.info(unreadCount);
             if (unreadCount > 0) {
                 if (uiMenu == false) {
                     var shortcutLinks = document.querySelector(".starred-pages").getElementsByTagName('a');
