@@ -87,7 +87,7 @@ export default {
                     document.getElementById('unreadBadge').remove();
                 }
                 if (!document.getElementById(uiTag + 'Div')) {
-                    var div = document.createElement('unreadDiv');
+                    var div = document.createElement('Div');
                     div.classList.add('log-button');
                     div.innerHTML = uiTag;
                     div.id = 'unreadDiv';
