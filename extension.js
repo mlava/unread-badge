@@ -96,7 +96,7 @@ export default {
                     span.classList.add('bp3-icon', 'bp3-icon-' + uiMenuIcon, 'icon');
                     div.prepend(span);
                     var sidebarcontent = document.querySelector("#app > div.roam-body > div.roam-app > div.roam-sidebar-container.noselect > div"),
-                        sidebartoprow = sidebarcontent.childNodes[2];
+                        sidebartoprow = sidebarcontent.childNodes[1];
                     if (sidebarcontent && sidebartoprow) {
                         sidebartoprow.parentNode.insertBefore(div, sidebartoprow.nextSibling);
                     }
