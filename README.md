@@ -1,5 +1,9 @@
 This extension allows you to define a tag or page within Roam Research for which you want to monitor the number of Linked References. This can be useful if you import data from other sources, like my Quick Capture with Todoist extension, for example, or with Readwise sync. 
 
+**NEW:**
+1. CSS fixes for badge and text alignment
+2. Change the display name of the tag you're monitoring when using the menu option
+
 Processing that information for its ongoing relevance and relationship with other information in your graph is almost as important as capturing it! When you process that item, remove the tag you're monitoring and it will no longer contribute to the count of 'unread' items.
 
 The extension will monitor how many linked refs you have that you haven't 'processed' and display a badge with an 'unread' number. You can choose whether the extension creates a menu item for the left sidebar, or whether it looks for a shortcut.
