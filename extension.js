@@ -1,4 +1,4 @@
-var uiTag, uiOffset, uiTextColour, uiBGColour, uiFreq, uiMenuIcon, key;
+var uiTag, uiTagName, uiOffset, uiTextColour, uiBGColour, uiFreq, uiMenuIcon, key;
 var uiMenu = false;
 var inboxInterval = 0;
 
@@ -15,6 +15,12 @@ export default {
                         type: "input", placeholder: "",
                         onChange: (evt) => { setUiTag(evt) }
                     },
+                },
+                {
+                    id: "ui-tagName",
+                    name: "Override Tag name",
+                    description: "Leave blank to use tag, or complete to use this string as the title in the menu/shortcut",
+                    action: { type: "input", placeholder: "" },
                 },
                 {
                     id: "ui-menu",
@@ -63,6 +69,11 @@ export default {
         extensionAPI.settings.panel.create(config);
         uiTag = extensionAPI.settings.get("ui-tag");
         uiMenu = extensionAPI.settings.get("ui-menu");
+        if (extensionAPI.settings.get("ui-tagName")) {
+            uiTagName = extensionAPI.settings.get("ui-tagName");
+        } else {
+            uiTagName = uiTag;
+        }
         if (extensionAPI.settings.get("ui-menuicon")) {
             uiMenuIcon = extensionAPI.settings.get("ui-menuicon");
         } else {
@@ -89,7 +100,7 @@ export default {
                 if (!document.getElementById(uiTag + 'Div')) {
                     var div = document.createElement('Div');
                     div.classList.add('log-button');
-                    div.innerHTML = uiTag;
+                    div.innerHTML = uiTagName;
                     div.id = 'unreadDiv';
                     div.onclick = goToPage;
                     var span = document.createElement('span');
@@ -133,7 +144,7 @@ export default {
                 }
                 var span = document.createElement('span');
                 span.id = "unreadBadge";
-                span.innerHTML = " " + unreadCount;
+                span.innerHTML = "" + unreadCount;
                 if (!document.getElementById('unreadBadge')) {
                     if (uiMenu == true) {
                         span.style = 'color: ' + uiTextColour + '; background-color: ' + uiBGColour + '; ';
