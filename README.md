@@ -3,6 +3,7 @@ This extension allows you to define a tag or page within Roam Research for which
 **NEW:**
 1. CSS fixes for badge and text alignment
 2. Change the display name of the tag you're monitoring when using the menu option
+3. Monitor a second tag, defining different badge and text colours if desired
 
 Processing that information for its ongoing relevance and relationship with other information in your graph is almost as important as capturing it! When you process that item, remove the tag you're monitoring and it will no longer contribute to the count of 'unread' items.
 
