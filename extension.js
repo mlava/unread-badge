@@ -23,8 +23,10 @@ export default {
                     id: "ui-tagName",
                     name: "Override Tag name",
                     description: "Leave blank to use tag, or complete to use this string as the title in the menu/shortcut",
-                    action: { type: "input", placeholder: "",
-                    onChange: (evt) => { setUiTagName(evt) } }
+                    action: {
+                        type: "input", placeholder: "",
+                        onChange: (evt) => { setUiTagName(evt) }
+                    }
                 },
                 {
                     id: "ui-menu",
@@ -48,28 +50,28 @@ export default {
                     id: "ui-offset",
                     name: "Count correction offset",
                     description: "If your count is too high, use this number to correct",
-                    action: { type: "input", placeholder: "0",
-                    onChange: (evt) => { setUiOffset(evt) } },
+                    action: {
+                        type: "input", placeholder: "0",
+                        onChange: (evt) => { setUiOffset(evt) }
+                    },
                 },
                 {
                     id: "ui-textcolour",
                     name: "Badge text colour",
                     description: "Colour of badge text (named css colour or hex code)",
-                    action: { type: "input", placeholder: "e.g. white or #FFFFFF",
-                    onChange: (evt) => { setTextColour(evt) } },
+                    action: {
+                        type: "input", placeholder: "e.g. white or #FFFFFF",
+                        onChange: (evt) => { setTextColour(evt) }
+                    },
                 },
                 {
                     id: "ui-bgcolour",
                     name: "Badge background colour",
                     description: "Colour of badge background (named css colour or hex code)",
-                    action: { type: "input", placeholder: "e.g. red or #FF0000",
-                    onChange: (evt) => { setBGColour(evt) } },
-                },
-                {
-                    id: "ui-freq",
-                    name: "Frequency to update unread count",
-                    description: "How often to update in minutes",
-                    action: { type: "input", placeholder: "5" },
+                    action: {
+                        type: "input", placeholder: "e.g. red or #FF0000",
+                        onChange: (evt) => { setBGColour(evt) }
+                    },
                 },
                 {
                     id: "ui-secondTag",
@@ -93,15 +95,19 @@ export default {
                     id: "ui-tagName1",
                     name: "Override Second Tag name",
                     description: "Leave blank to use tag, or complete to use this string as the title in the menu/shortcut",
-                    action: { type: "input", placeholder: "",
-                    onChange: (evt) => { setUiTagName1(evt) } }
+                    action: {
+                        type: "input", placeholder: "",
+                        onChange: (evt) => { setUiTagName1(evt) }
+                    }
                 },
                 {
                     id: "ui-offset1",
                     name: "Second tag count correction offset",
                     description: "If your count is too high, use this number to correct",
-                    action: { type: "input", placeholder: "0",
-                    onChange: (evt) => { setUiOffset1(evt) } },
+                    action: {
+                        type: "input", placeholder: "0",
+                        onChange: (evt) => { setUiOffset1(evt) }
+                    },
                 },
                 {
                     id: "ui-menu1",
@@ -125,15 +131,19 @@ export default {
                     id: "ui-textcolour1",
                     name: "Second badge text colour",
                     description: "Colour of badge text (named css colour or hex code)",
-                    action: { type: "input", placeholder: "e.g. white or #FFFFFF",
-                    onChange: (evt) => { setTextColour1(evt) } },
+                    action: {
+                        type: "input", placeholder: "e.g. white or #FFFFFF",
+                        onChange: (evt) => { setTextColour1(evt) }
+                    },
                 },
                 {
                     id: "ui-bgcolour1",
                     name: "Second badge background colour",
                     description: "Colour of badge background (named css colour or hex code)",
-                    action: { type: "input", placeholder: "e.g. red or #FF0000",
-                    onChange: (evt) => { setBGColour1(evt) } },
+                    action: {
+                        type: "input", placeholder: "e.g. red or #FF0000",
+                        onChange: (evt) => { setBGColour1(evt) }
+                    },
                 },
             ]
         };
@@ -242,7 +252,7 @@ export default {
             if (extensionAPI.settings.get("ui-offset1")) {
                 const regex = /^[0-9]{1,3}$/;
                 if (extensionAPI.settings.get("ui-offset1") && regex.test(extensionAPI.settings.get("ui-offset1"))) {
-                    uiOffset = extensionAPI.settings.get("ui-offset1");
+                    uiOffset1 = extensionAPI.settings.get("ui-offset1");
                 } else {
                     key = "offset";
                     sendConfigAlert(key);
@@ -271,24 +281,20 @@ export default {
             } else {
                 uiBGColour1 = "red";
             }
-            if (extensionAPI.settings.get("ui-freq")) {
-                const regex = /^\d{1,2}$/;
-                if (extensionAPI.settings.get("ui-freq").match(regex)) {
-                    uiFreq = extensionAPI.settings.get("ui-freq");
-                } else {
-                    key = "freq";
-                    sendConfigAlert(key);
-                    break breakme;
-                }
-            } else {
-                uiFreq = "5";
-            }
 
             checkInbox();
-            try { if (inboxInterval > 0) clearInterval(inboxInterval) } catch (e) { }
-            inboxInterval = setInterval(async () => {
-                await checkInbox()
-            }, uiFreq * 60000);
+
+            window.roamAlphaAPI.data.addPullWatch(
+                "[:block/_refs :block/uid :node/title]",
+                `[:node/title "${uiTag}"]`,
+                function a(before, after) { checkInbox(after, null); });
+
+            if (uiSecondTag == true) {
+                window.roamAlphaAPI.data.addPullWatch(
+                    "[:block/_refs :block/uid :node/title]",
+                    `[:node/title "${uiTag1}"]`,
+                    function a(before, after) { checkInbox(null, after); });
+            }
         }
     },
     onunload: () => {
@@ -304,7 +310,14 @@ export default {
         if (document.getElementById('unreadBadge1')) {
             document.getElementById('unreadBadge1').remove();
         }
-        clearInterval(inboxInterval);
+        window.roamAlphaAPI.data.removePullWatch(
+            "[:block/_refs :block/uid :node/title]",
+            `[:node/title "${uiTag}"]`,
+            function a(before, after) { checkInbox(after, null); });
+        window.roamAlphaAPI.data.removePullWatch(
+            "[:block/_refs :block/uid :node/title]",
+            `[:node/title "${uiTag1}"]`,
+            function a(before, after) { checkInbox(null, after); });
     }
 }
 
@@ -360,23 +373,29 @@ function createDIVs() {
     checkInbox();
 }
 
-async function checkInbox() {
+async function checkInbox(after, after1) {
     var shortcutDIV = undefined;
     var shortcutDIV1 = undefined;
-    unreadCount = window.roamAlphaAPI
-        .q(
-            `[:find ?u :where [?r :block/uid ?u] [?r :block/refs ?p] [?p :node/title "${uiTag}"]]`
-        )
-        .map((s) => s[0]).length - uiOffset;
-
-    if (uiSecondTag == true) {
-        unreadCount1 = window.roamAlphaAPI
-        .q(
-            `[:find ?u :where [?r :block/uid ?u] [?r :block/refs ?p] [?p :node/title "${uiTag1}"]]`
-        )
-        .map((s) => s[0]).length - uiOffset1;
+    if (after != undefined && after != null && after.hasOwnProperty("[\":block/_refs\"]")) {
+        unreadCount = after[":block/_refs"].length - uiOffset;
+    } else {
+        unreadCount = await window.roamAlphaAPI
+            .q(
+                `[:find ?u :where [?r :block/uid ?u] [?r :block/refs ?p] [?p :node/title "${uiTag}"]]`
+            )
+            .map((s) => s[0]).length - uiOffset;
     }
-    
+
+    if (after1 != undefined && after1 != null && after1.hasOwnProperty("[\":block/_refs\"]") && uiSecondTag == true) {
+        unreadCount1 = after1[":block/_refs"].length - uiOffset1;
+    } else {
+        unreadCount1 = await window.roamAlphaAPI
+            .q(
+                `[:find ?u :where [?r :block/uid ?u] [?r :block/refs ?p] [?p :node/title "${uiTag1}"]]`
+            )
+            .map((s) => s[0]).length - uiOffset1;
+    }
+
     if (unreadCount > 0) {
         if (uiMenu == false) {
             var shortcutLinks = document.querySelector(".starred-pages").getElementsByTagName('a');
@@ -395,18 +414,19 @@ async function checkInbox() {
         span.innerHTML = "" + unreadCount;
         if (!document.getElementById('unreadBadge')) {
             if (uiMenu == true) {
-                span.style = 'color: ' + uiTextColour + '; background-color: ' + uiBGColour + '; ';
+                span.style = 'color: ' + uiTextColour + '; background-color: ' + uiBGColour + '; display: inline-flex; ';
                 document.getElementById("unreadDiv").appendChild(span);
             } else {
-                span.style = 'color: ' + uiTextColour + '; background-color: ' + uiBGColour + '; ';
+                span.style = 'color: ' + uiTextColour + '; background-color: ' + uiBGColour + '; display: inline-flex; ';
                 shortcutDIV.appendChild(span);
             }
         } else {
+            document.getElementById('unreadBadge').style = 'color: ' + uiTextColour + '; background-color: ' + uiBGColour + '; display: inline-flex; ';
             document.getElementById("unreadBadge").innerHTML = unreadCount;
         }
     } else {
         if (document.getElementById('unreadBadge')) {
-            document.getElementById('unreadBadge').style = "display: none;";
+            document.getElementById('unreadBadge').style = 'color: ' + uiTextColour + '; background-color: ' + uiBGColour + '; display: none; ';
         }
     }
     if (unreadCount1 > 0 && uiSecondTag == true) {
@@ -420,25 +440,25 @@ async function checkInbox() {
             if (shortcutDIV1 == "undefined") {
                 alert("Please make sure that you have made a shortcut to the tag you want to monitor!");
             }
-            var shortcutLinks1 = document.querySelector(".starred-pages").getElementsByTagName('a');
         }
-        var span = document.createElement('span');
-        span.id = "unreadBadge1";
-        span.innerHTML = "" + unreadCount1;
+        var span1 = document.createElement('span');
+        span1.id = "unreadBadge1";
+        span1.innerHTML = "" + unreadCount1;
         if (!document.getElementById('unreadBadge1')) {
             if (uiMenu1 == true) {
-                span.style = 'color: ' + uiTextColour1 + '; background-color: ' + uiBGColour1 + '; ';
-                document.getElementById("unreadDiv1").appendChild(span);
+                span1.style = 'color: ' + uiTextColour1 + '; background-color: ' + uiBGColour1 + '; display: inline-flex; ';
+                document.getElementById("unreadDiv1").appendChild(span1);
             } else {
-                span.style = 'color: ' + uiTextColour1 + '; background-color: ' + uiBGColour1 + '; ';
-                shortcutDIV1.appendChild(span);
+                span1.style = 'color: ' + uiTextColour1 + '; background-color: ' + uiBGColour1 + '; display: inline-flex; ';
+                shortcutDIV1.appendChild(span1);
             }
         } else {
+            document.getElementById('unreadBadge1').style = 'color: ' + uiTextColour1 + '; background-color: ' + uiBGColour1 + '; display: inline-flex;';
             document.getElementById("unreadBadge1").innerHTML = unreadCount1;
         }
     } else {
         if (document.getElementById('unreadBadge1')) {
-            document.getElementById('unreadBadge1').style = "display: none;";
+            document.getElementById('unreadBadge1').style = 'color: ' + uiTextColour1 + '; background-color: ' + uiBGColour1 + '; display: none;';
         }
     }
 }
@@ -455,6 +475,7 @@ async function goToPage(e) {
         window.roamAlphaAPI.ui.mainWindow.openBlock({ block: { uid: uid } });
     }
 }
+
 async function goToPage1(e) {
     var shiftButton = false;
     if (e.shiftKey) {
@@ -473,7 +494,5 @@ function sendConfigAlert(key) {
         alert("Please set the tag to monitor in the configuration settings via the Roam Depot tab.");
     } else if (key == "offset") {
         alert("Please set offset as an integer in the configuration settings via the Roam Depot tab.");
-    } else if (key == "freq") {
-        alert("Please set frequency in minutes in the configuration settings via the Roam Depot tab.");
     }
 }
