@@ -1,6 +1,9 @@
 This extension allows you to define a tag or page within Roam Research for which you want to monitor the number of Linked References. This can be useful if you import data from other sources, like my Quick Capture with Todoist extension, for example, or with Readwise sync. 
 
 **NEW:**
+1. Unread counts should now update immediately, and the frequency to check for unread items settings have been removed from the Roam Depot configuration.
+
+**Recent:**
 1. CSS fixes for badge and text alignment
 2. Change the display name of the tag you're monitoring when using the menu option
 3. Monitor a second tag, defining different badge and text colours if desired
@@ -21,7 +24,7 @@ If you choose shortcut option, make sure you've starred that page as a shortcut 
 
 ![image](https://user-images.githubusercontent.com/6857790/187310681-7e6d6986-bf2b-4841-9c3e-a48f40b13980.png)
 
-You can configure the background colour, text colour and frequency the script checks for updated unread count in minutes. For the menu item you can configure which of the blueprintjs icons to use from the list at: https://blueprintjs.com/docs/#icons
+You can configure the background colour and text colour for the badge. For the menu item you can configure which of the blueprintjs icons to use from the list at: https://blueprintjs.com/docs/#icons
 
 Finally, you can offset the unread count if you don't want to include references to this tag from certain pages. Similar to using the inbuilt Roam Research filter option, if there are some pages that won't be relevant to the count, you can set an offset to be subtracted from the count.
 
