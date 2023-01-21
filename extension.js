@@ -149,6 +149,7 @@ export default {
         };
         extensionAPI.settings.panel.create(config);
 
+        // onload
         uiTag = extensionAPI.settings.get("ui-tag");
         uiTag1 = extensionAPI.settings.get("ui-tag1");
         uiMenu = extensionAPI.settings.get("ui-menu");
@@ -177,6 +178,7 @@ export default {
         }
         createDIVs();
 
+        // on update config
         function setUiTag(evt) {
             uiTag = evt.target.value;
             createDIVs();
@@ -186,11 +188,19 @@ export default {
             createDIVs();
         }
         function setUiTagName(evt) {
-            uiTagName = evt.target.value;
+            if (evt.target.value.length > 0) {
+                uiTagName = evt.target.value;
+            } else {
+                uiTagName = extensionAPI.settings.get("ui-tag");
+            }
             createDIVs();
         }
         function setUiTagName1(evt) {
-            uiTagName1 = evt.target.value;
+            if (evt.target.value.length > 0) {
+                uiTagName1 = evt.target.value;
+            } else {
+                uiTagName1 = extensionAPI.settings.get("ui-tag1");
+            }
             createDIVs();
         }
         function setUiMenu(evt) {
@@ -326,6 +336,9 @@ function createDIVs() {
         if (document.getElementById('unreadBadge')) {
             document.getElementById('unreadBadge').remove();
         }
+        if (document.getElementById('unreadDiv')) {
+            document.getElementById('unreadDiv').remove();
+        }
         if (!document.getElementById('unreadDiv')) {
             var div = document.createElement('Div');
             div.classList.add('log-button');
@@ -349,6 +362,9 @@ function createDIVs() {
     if (uiMenu1 == true && uiSecondTag == true) { // make a second menu div & destroy any shortcut badges
         if (document.getElementById('unreadBadge1')) {
             document.getElementById('unreadBadge1').remove();
+        }
+        if (document.getElementById('unreadDiv1')) {
+            document.getElementById('unreadDiv1').remove();
         }
         if (!document.getElementById('unreadDiv1')) {
             var div = document.createElement('Div');
@@ -379,21 +395,32 @@ async function checkInbox(after, after1) {
     if (after != undefined && after != null && after.hasOwnProperty("[\":block/_refs\"]")) {
         unreadCount = after[":block/_refs"].length - uiOffset;
     } else {
-        unreadCount = await window.roamAlphaAPI
-            .q(
-                `[:find ?u :where [?r :block/uid ?u] [?r :block/refs ?p] [?p :node/title "${uiTag}"]]`
-            )
-            .map((s) => s[0]).length - uiOffset;
+        // thanks to David Vargas at https://github.com/dvargas92495/roam-client/blob/main/src/queries.ts#L263
+        let search = await window.roamAlphaAPI.q(`[:find ?u ?s :where [?r :block/uid ?u] [?r :block/string ?s] [?r :block/refs ?p] [?p :node/title "${uiTag}"]]`);
+        let finalSearch = [];
+        if (search.length > 0) {
+            for (var i = 0; i < search.length; i++) {
+                if (!search[i][1].startsWith("{{[[query]]")) {
+                    finalSearch.push(i);
+                }
+            }
+        }
+        unreadCount = finalSearch.length - uiOffset;
     }
 
     if (after1 != undefined && after1 != null && after1.hasOwnProperty("[\":block/_refs\"]") && uiSecondTag == true) {
         unreadCount1 = after1[":block/_refs"].length - uiOffset1;
     } else {
-        unreadCount1 = await window.roamAlphaAPI
-            .q(
-                `[:find ?u :where [?r :block/uid ?u] [?r :block/refs ?p] [?p :node/title "${uiTag1}"]]`
-            )
-            .map((s) => s[0]).length - uiOffset1;
+        let search = await window.roamAlphaAPI.q(`[:find ?u ?s :where [?r :block/uid ?u] [?r :block/string ?s] [?r :block/refs ?p] [?p :node/title "${uiTag1}"]]`);
+        let finalSearch = [];
+        if (search.length > 0) {
+            for (var i = 0; i < search.length; i++) {
+                if (!search[i][1].startsWith("{{[[query]]")) {
+                    finalSearch.push(i);
+                }
+            }
+        }
+        unreadCount1 = finalSearch.length - uiOffset1;
     }
 
     if (unreadCount > 0) {
@@ -418,7 +445,9 @@ async function checkInbox(after, after1) {
                 document.getElementById("unreadDiv").appendChild(span);
             } else {
                 span.style = 'color: ' + uiTextColour + '; background-color: ' + uiBGColour + '; display: inline-flex; ';
-                shortcutDIV.appendChild(span);
+                if (shortcutDIV != undefined) {
+                    shortcutDIV.appendChild(span);
+                }
             }
         } else {
             document.getElementById('unreadBadge').style = 'color: ' + uiTextColour + '; background-color: ' + uiBGColour + '; display: inline-flex; ';
@@ -450,7 +479,9 @@ async function checkInbox(after, after1) {
                 document.getElementById("unreadDiv1").appendChild(span1);
             } else {
                 span1.style = 'color: ' + uiTextColour1 + '; background-color: ' + uiBGColour1 + '; display: inline-flex; ';
-                shortcutDIV1.appendChild(span1);
+                if (shortcutDIV1 != undefined) {
+                    shortcutDIV1.appendChild(span1);
+                }
             }
         } else {
             document.getElementById('unreadBadge1').style = 'color: ' + uiTextColour1 + '; background-color: ' + uiBGColour1 + '; display: inline-flex;';
@@ -465,11 +496,19 @@ async function checkInbox(after, after1) {
 
 async function goToPage(e) {
     var shiftButton = false;
+    var ctrlButton = false;
     if (e.shiftKey) {
         shiftButton = true;
     }
+    if (e.ctrlKey) {
+        ctrlButton = true;
+    } else if (e.metaKey) {
+        ctrlButton = true;
+    }
     let uid = await window.roamAlphaAPI.q(`[:find ?uid :where [?e :node/title "${uiTag}"][?e :block/uid ?uid ] ]`)[0].toString();
-    if (shiftButton) {
+    if (ctrlButton && shiftButton) {
+        window.roamAlphaAPI.ui.rightSidebar.addWindow({ window: { type: 'mentions', 'block-uid': uid } });
+    } else if (shiftButton) {
         window.roamAlphaAPI.ui.rightSidebar.addWindow({ window: { type: 'outline', 'block-uid': uid } });
     } else {
         window.roamAlphaAPI.ui.mainWindow.openBlock({ block: { uid: uid } });
