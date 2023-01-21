@@ -3,6 +3,7 @@ This extension allows you to define a tag or page within Roam Research for which
 **NEW:**
 1. Ctrl-Shift click (or Cmd-Shift-Click on iOS) will open block references in the right sidebar
 2. Fix for tags used in Queries adding to count
+3. Bug fix in renaming Menu tags
 
 **Recent:**
 1. Unread counts should now update immediately, and the frequency to check for unread items settings have been removed from the Roam Depot configuration.
