@@ -15,8 +15,9 @@ export default {
                     name: "Tag to monitor",
                     description: "Roam Research tag for which you want an unread badge",
                     action: {
-                        type: "input", placeholder: "",
-                        onChange: (evt) => { setUiTag(evt) }
+                        type: "input",
+                        placeholder: "",
+                        onChange: (evt) => { setUiTag(evt); }
                     },
                 },
                 {
@@ -24,8 +25,9 @@ export default {
                     name: "Override Tag name",
                     description: "Leave blank to use tag, or complete to use this string as the title in the menu/shortcut",
                     action: {
-                        type: "input", placeholder: "",
-                        onChange: (evt) => { setUiTagName(evt) }
+                        type: "input",
+                        placeholder: "",
+                        onChange: (evt) => { setUiTagName(evt); }
                     }
                 },
                 {
@@ -34,7 +36,7 @@ export default {
                     description: "Add a button for tag and badge to the left side bar menu. If switched off, this extension will look in Shortcuts for a link to the tag.",
                     action: {
                         type: "switch",
-                        onChange: (evt) => { setUiMenu(evt) }
+                        onChange: (evt) => { setUiMenu(evt); }
                     },
                 },
                 {
@@ -42,8 +44,9 @@ export default {
                     name: "Icon for menu tag",
                     description: "Which icon do you want to use if added to left sidebar menu? Lower case icon name from https://blueprintjs.com/docs/#icons.",
                     action: {
-                        type: "input", placeholder: "inbox",
-                        onChange: (evt) => { setUiMenuIcon(evt) }
+                        type: "input",
+                        placeholder: "inbox",
+                        onChange: (evt) => { setUiMenuIcon(evt); }
                     },
                 },
                 {
@@ -51,8 +54,9 @@ export default {
                     name: "Count correction offset",
                     description: "If your count is too high, use this number to correct",
                     action: {
-                        type: "input", placeholder: "0",
-                        onChange: (evt) => { setUiOffset(evt) }
+                        type: "input",
+                        placeholder: "0",
+                        onChange: (evt) => { setUiOffset(evt); }
                     },
                 },
                 {
@@ -60,8 +64,9 @@ export default {
                     name: "Badge text colour",
                     description: "Colour of badge text (named css colour or hex code)",
                     action: {
-                        type: "input", placeholder: "e.g. white or #FFFFFF",
-                        onChange: (evt) => { setTextColour(evt) }
+                        type: "input",
+                        placeholder: "e.g. white or #FFFFFF",
+                        onChange: (evt) => { setTextColour(evt); }
                     },
                 },
                 {
@@ -69,8 +74,9 @@ export default {
                     name: "Badge background colour",
                     description: "Colour of badge background (named css colour or hex code)",
                     action: {
-                        type: "input", placeholder: "e.g. red or #FF0000",
-                        onChange: (evt) => { setBGColour(evt) }
+                        type: "input",
+                        placeholder: "e.g. red or #FF0000",
+                        onChange: (evt) => { setBGColour(evt); }
                     },
                 },
                 {
@@ -79,7 +85,7 @@ export default {
                     description: "Turn On to monitor a second tag",
                     action: {
                         type: "switch",
-                        onChange: (evt) => { setSecondTag(evt) }
+                        onChange: (evt) => { setSecondTag(evt); }
                     },
                 },
                 {
@@ -87,8 +93,9 @@ export default {
                     name: "Second Tag to monitor",
                     description: "A second Roam Research tag for which you want an unread badge (optional)",
                     action: {
-                        type: "input", placeholder: "",
-                        onChange: (evt) => { setUiTag1(evt) }
+                        type: "input",
+                        placeholder: "",
+                        onChange: (evt) => { setUiTag1(evt); }
                     },
                 },
                 {
@@ -96,8 +103,9 @@ export default {
                     name: "Override Second Tag name",
                     description: "Leave blank to use tag, or complete to use this string as the title in the menu/shortcut",
                     action: {
-                        type: "input", placeholder: "",
-                        onChange: (evt) => { setUiTagName1(evt) }
+                        type: "input",
+                        placeholder: "",
+                        onChange: (evt) => { setUiTagName1(evt); }
                     }
                 },
                 {
@@ -105,8 +113,9 @@ export default {
                     name: "Second tag count correction offset",
                     description: "If your count is too high, use this number to correct",
                     action: {
-                        type: "input", placeholder: "0",
-                        onChange: (evt) => { setUiOffset1(evt) }
+                        type: "input",
+                        placeholder: "0",
+                        onChange: (evt) => { setUiOffset1(evt); }
                     },
                 },
                 {
@@ -115,7 +124,7 @@ export default {
                     description: "Add a button for tag and badge to the left side bar menu. If switched off, this extension will look in Shortcuts for a link to the tag.",
                     action: {
                         type: "switch",
-                        onChange: (evt) => { setUiMenu1(evt) }
+                        onChange: (evt) => { setUiMenu1(evt); }
                     },
                 },
                 {
@@ -123,8 +132,9 @@ export default {
                     name: "Icon for second menu tag",
                     description: "Which icon do you want to use if added to left sidebar menu? Lower case icon name from https://blueprintjs.com/docs/#icons.",
                     action: {
-                        type: "input", placeholder: "inbox",
-                        onChange: (evt) => { setUiMenuIcon1(evt) }
+                        type: "input",
+                        placeholder: "inbox",
+                        onChange: (evt) => { setUiMenuIcon1(evt); }
                     },
                 },
                 {
@@ -132,8 +142,9 @@ export default {
                     name: "Second badge text colour",
                     description: "Colour of badge text (named css colour or hex code)",
                     action: {
-                        type: "input", placeholder: "e.g. white or #FFFFFF",
-                        onChange: (evt) => { setTextColour1(evt) }
+                        type: "input",
+                        placeholder: "e.g. white or #FFFFFF",
+                        onChange: (evt) => { setTextColour1(evt); }
                     },
                 },
                 {
@@ -141,12 +152,14 @@ export default {
                     name: "Second badge background colour",
                     description: "Colour of badge background (named css colour or hex code)",
                     action: {
-                        type: "input", placeholder: "e.g. red or #FF0000",
-                        onChange: (evt) => { setBGColour1(evt) }
+                        type: "input",
+                        placeholder: "e.g. red or #FF0000",
+                        onChange: (evt) => { setBGColour1(evt); }
                     },
                 },
             ]
         };
+
         extensionAPI.settings.panel.create(config);
 
         // onload
@@ -161,21 +174,25 @@ export default {
         } else {
             uiTagName = uiTag;
         }
+
         if (extensionAPI.settings.get("ui-tagName1")) {
             uiTagName1 = extensionAPI.settings.get("ui-tagName1");
         } else {
             uiTagName1 = uiTag1;
         }
+
         if (extensionAPI.settings.get("ui-menuicon")) {
             uiMenuIcon = extensionAPI.settings.get("ui-menuicon");
         } else {
             uiMenuIcon = "inbox";
         }
+
         if (extensionAPI.settings.get("ui-menuicon1")) {
             uiMenuIcon1 = extensionAPI.settings.get("ui-menuicon1");
         } else {
             uiMenuIcon1 = "inbox";
         }
+
         createDIVs();
 
         // on update config
@@ -183,66 +200,76 @@ export default {
             uiTag = evt.target.value;
             createDIVs();
         }
+
         function setUiTag1(evt) {
             uiTag1 = evt.target.value;
             createDIVs();
         }
+
         function setUiTagName(evt) {
-            if (evt.target.value.length > 0) {
-                uiTagName = evt.target.value;
-            } else {
-                uiTagName = extensionAPI.settings.get("ui-tag");
-            }
+            const value = evt.target.value.trim();
+            uiTagName = value.length > 0 ? value : uiTag;
             createDIVs();
         }
+
         function setUiTagName1(evt) {
-            if (evt.target.value.length > 0) {
-                uiTagName1 = evt.target.value;
-            } else {
-                uiTagName1 = extensionAPI.settings.get("ui-tag1");
-            }
+            const value = evt.target.value.trim();
+            uiTagName1 = value.length > 0 ? value : uiTag1;
             createDIVs();
         }
+
         function setUiMenu(evt) {
             uiMenu = evt.target.checked;
             createDIVs();
         }
+
         function setUiOffset(evt) {
             uiOffset = evt.target.value;
             createDIVs();
         }
+
         function setUiMenuIcon(evt) {
             uiMenuIcon = evt.target.value;
         }
+
         function setUiMenu1(evt) {
             uiMenu1 = evt.target.checked;
             createDIVs();
         }
+
         function setUiMenuIcon1(evt) {
             uiMenuIcon1 = evt.target.value;
         }
+
         function setUiOffset1(evt) {
             uiOffset1 = evt.target.value;
             createDIVs();
         }
+
         function setSecondTag(evt) {
             uiSecondTag = evt.target.checked;
             createDIVs();
         }
+
         function setTextColour(evt) {
             uiTextColour = evt.target.value;
             createDIVs();
         }
+
         function setBGColour(evt) {
-            uiBGColour = evt.target.value;
+            const value = evt.target.value.trim();
+            uiBGColour = value.length > 0 ? value : "red";
             createDIVs();
         }
+
         function setTextColour1(evt) {
             uiTextColour1 = evt.target.value;
             createDIVs();
         }
+
         function setBGColour1(evt) {
-            uiBGColour1 = evt.target.value;
+            const value = evt.target.value.trim();
+            uiBGColour1 = value.length > 0 ? value : "red";
             createDIVs();
         }
 
@@ -259,6 +286,7 @@ export default {
             } else {
                 uiOffset = "0";
             }
+
             if (extensionAPI.settings.get("ui-offset1")) {
                 const regex = /^[0-9]{1,3}$/;
                 if (extensionAPI.settings.get("ui-offset1") && regex.test(extensionAPI.settings.get("ui-offset1"))) {
@@ -271,21 +299,25 @@ export default {
             } else {
                 uiOffset1 = "0";
             }
+
             if (extensionAPI.settings.get("ui-textcolour")) {
                 uiTextColour = extensionAPI.settings.get("ui-textcolour");
             } else {
                 uiTextColour = "white";
             }
+
             if (extensionAPI.settings.get("ui-bgcolour")) {
                 uiBGColour = extensionAPI.settings.get("ui-bgcolour");
             } else {
                 uiBGColour = "red";
             }
+
             if (extensionAPI.settings.get("ui-textcolour1")) {
                 uiTextColour1 = extensionAPI.settings.get("ui-textcolour1");
             } else {
                 uiTextColour1 = "white";
             }
+
             if (extensionAPI.settings.get("ui-bgcolour1")) {
                 uiBGColour1 = extensionAPI.settings.get("ui-bgcolour1");
             } else {
@@ -297,106 +329,130 @@ export default {
             window.roamAlphaAPI.data.addPullWatch(
                 "[:block/_refs :block/uid :node/title]",
                 `[:node/title "${uiTag}"]`,
-                function a(before, after) { checkInbox(after, null); });
+                function a(before, after) { checkInbox(after, null); }
+            );
 
             if (uiSecondTag == true) {
                 window.roamAlphaAPI.data.addPullWatch(
                     "[:block/_refs :block/uid :node/title]",
                     `[:node/title "${uiTag1}"]`,
-                    function a(before, after) { checkInbox(null, after); });
+                    function a(before, after) { checkInbox(null, after); }
+                );
             }
         }
     },
+
     onunload: () => {
-        if (document.getElementById('unreadDiv')) {
-            document.getElementById('unreadDiv').remove();
+        if (document.getElementById("unreadDiv")) {
+            document.getElementById("unreadDiv").remove();
         }
-        if (document.getElementById('unreadBadge')) {
-            document.getElementById('unreadBadge').remove();
+        if (document.getElementById("unreadBadge")) {
+            document.getElementById("unreadBadge").remove();
         }
-        if (document.getElementById('unreadDiv1')) {
-            document.getElementById('unreadDiv1').remove();
+        if (document.getElementById("unreadDiv1")) {
+            document.getElementById("unreadDiv1").remove();
         }
-        if (document.getElementById('unreadBadge1')) {
-            document.getElementById('unreadBadge1').remove();
+        if (document.getElementById("unreadBadge1")) {
+            document.getElementById("unreadBadge1").remove();
         }
+
         window.roamAlphaAPI.data.removePullWatch(
             "[:block/_refs :block/uid :node/title]",
             `[:node/title "${uiTag}"]`,
-            function a(before, after) { checkInbox(after, null); });
+            function a(before, after) { checkInbox(after, null); }
+        );
         window.roamAlphaAPI.data.removePullWatch(
             "[:block/_refs :block/uid :node/title]",
             `[:node/title "${uiTag1}"]`,
-            function a(before, after) { checkInbox(null, after); });
+            function a(before, after) { checkInbox(null, after); }
+        );
     }
-}
+};
 
 function createDIVs() {
+    // Fallbacks: if no override name, use the tag itself
+    if (!uiTagName && uiTag) uiTagName = uiTag;
+    if (!uiTagName1 && uiTag1) uiTagName1 = uiTag1;
+
     if (uiMenu == true) { // make a menu div & destroy any shortcut badges
-        if (document.getElementById('unreadBadge')) {
-            document.getElementById('unreadBadge').remove();
+        if (document.getElementById("unreadBadge")) {
+            document.getElementById("unreadBadge").remove();
         }
-        if (document.getElementById('unreadDiv')) {
-            document.getElementById('unreadDiv').remove();
+        if (document.getElementById("unreadDiv")) {
+            document.getElementById("unreadDiv").remove();
         }
-        if (!document.getElementById('unreadDiv')) {
-            var div = document.createElement('Div');
-            div.classList.add('log-button');
+        if (!document.getElementById("unreadDiv")) {
+            var div = document.createElement("Div");
+            div.classList.add("log-button");
             div.innerHTML = uiTagName;
-            div.id = 'unreadDiv';
+            div.id = "unreadDiv";
             div.onclick = goToPage;
-            var span = document.createElement('span');
-            span.classList.add('bp3-icon', 'bp3-icon-' + uiMenuIcon, 'icon');
+
+            var span = document.createElement("span");
+            span.classList.add("bp3-icon", "bp3-icon-" + uiMenuIcon, "icon");
             div.prepend(span);
-            var sidebarcontent = document.querySelector("#app > div.roam-body > div.roam-app > div.roam-sidebar-container.noselect > div"),
+
+            var sidebarcontent = document.querySelector(
+                "#app > div.roam-body > div.roam-app > div.roam-sidebar-container.noselect > div"
+            ),
                 sidebartoprow = sidebarcontent.childNodes[1];
             if (sidebarcontent && sidebartoprow) {
                 sidebartoprow.parentNode.insertBefore(div, sidebartoprow.nextSibling);
             }
         }
-    } else { // check for and destroy any menu divs
-        if (document.getElementById('unreadDiv')) {
-            document.getElementById('unreadDiv').remove();
+    } else {
+        // check for and destroy any menu divs
+        if (document.getElementById("unreadDiv")) {
+            document.getElementById("unreadDiv").remove();
         }
     }
-    if (uiMenu1 == true && uiSecondTag == true) { // make a second menu div & destroy any shortcut badges
-        if (document.getElementById('unreadBadge1')) {
-            document.getElementById('unreadBadge1').remove();
+
+    if (uiMenu1 == true && uiSecondTag == true) { // second menu div
+        if (document.getElementById("unreadBadge1")) {
+            document.getElementById("unreadBadge1").remove();
         }
-        if (document.getElementById('unreadDiv1')) {
-            document.getElementById('unreadDiv1').remove();
+        if (document.getElementById("unreadDiv1")) {
+            document.getElementById("unreadDiv1").remove();
         }
-        if (!document.getElementById('unreadDiv1')) {
-            var div = document.createElement('Div');
-            div.classList.add('log-button');
-            div.innerHTML = uiTagName1;
-            div.id = 'unreadDiv1';
-            div.onclick = goToPage1;
-            var span = document.createElement('span');
-            span.classList.add('bp3-icon', 'bp3-icon-' + uiMenuIcon1, 'icon');
-            div.prepend(span);
-            var sidebarcontent = document.querySelector("#app > div.roam-body > div.roam-app > div.roam-sidebar-container.noselect > div"),
-                sidebartoprow = sidebarcontent.childNodes[2];
-            if (sidebarcontent && sidebartoprow) {
-                sidebartoprow.parentNode.insertBefore(div, sidebartoprow.nextSibling);
+        if (!document.getElementById("unreadDiv1")) {
+            var div1 = document.createElement("Div");
+            div1.classList.add("log-button");
+            div1.innerHTML = uiTagName1;
+            div1.id = "unreadDiv1";
+            div1.onclick = goToPage1;
+
+            var span1 = document.createElement("span");
+            span1.classList.add("bp3-icon", "bp3-icon-" + uiMenuIcon1, "icon");
+            div1.prepend(span1);
+
+            var sidebarcontent1 = document.querySelector(
+                "#app > div.roam-body > div.roam-app > div.roam-sidebar-container.noselect > div"
+            ),
+                sidebartoprow1 = sidebarcontent1.childNodes[2];
+            if (sidebarcontent1 && sidebartoprow1) {
+                sidebartoprow1.parentNode.insertBefore(div1, sidebartoprow1.nextSibling);
             }
         }
-    } else { // check for and destroy any menu divs
-        if (document.getElementById('unreadDiv1')) {
-            document.getElementById('unreadDiv1').remove();
+    } else {
+        if (document.getElementById("unreadDiv1")) {
+            document.getElementById("unreadDiv1").remove();
         }
     }
+
     checkInbox();
 }
 
 async function checkInbox(after, after1) {
     var shortcutDIV = undefined;
     var shortcutDIV1 = undefined;
-    if (after != undefined && after != null && after.hasOwnProperty("[\":block/_refs\"]")) {
-        unreadCount = after[":block/_refs"].length - uiOffset;
+
+    if (after != undefined && after != null && after.hasOwnProperty('[":block/_refs"]')) {
+        unreadCount = after['[":block/_refs"]'].length - uiOffset;
     } else {
         // thanks to David Vargas at https://github.com/dvargas92495/roam-client/blob/main/src/queries.ts#L263
-        let search = await window.roamAlphaAPI.q(`[:find ?u ?s :where [?r :block/uid ?u] [?r :block/string ?s] [?r :block/refs ?p] [?p :node/title "${uiTag}"]]`);
+        let search = await window.roamAlphaAPI.q(
+            `[:find ?u ?s :where [?r :block/uid ?u] [?r :block/string ?s] [?r :block/refs ?p] [?p :node/title "${uiTag}"]]`
+        );
         let finalSearch = [];
         if (search.length > 0) {
             for (var i = 0; i < search.length; i++) {
@@ -408,24 +464,26 @@ async function checkInbox(after, after1) {
         unreadCount = finalSearch.length - uiOffset;
     }
 
-    if (after1 != undefined && after1 != null && after1.hasOwnProperty("[\":block/_refs\"]") && uiSecondTag == true) {
-        unreadCount1 = after1[":block/_refs"].length - uiOffset1;
-    } else {
-        let search = await window.roamAlphaAPI.q(`[:find ?u ?s :where [?r :block/uid ?u] [?r :block/string ?s] [?r :block/refs ?p] [?p :node/title "${uiTag1}"]]`);
-        let finalSearch = [];
-        if (search.length > 0) {
-            for (var i = 0; i < search.length; i++) {
-                if (!search[i][1].startsWith("{{[[query]]")) {
-                    finalSearch.push(i);
+    if (after1 != undefined && after1 != null && after1.hasOwnProperty('[":block/_refs"]') && uiSecondTag == true) {
+        unreadCount1 = after1['[":block/_refs"]'].length - uiOffset1;
+    } else if (uiSecondTag == true) {
+        let search1 = await window.roamAlphaAPI.q(
+            `[:find ?u ?s :where [?r :block/uid ?u] [?r :block/string ?s] [?r :block/refs ?p] [?p :node/title "${uiTag1}"]]`
+        );
+        let finalSearch1 = [];
+        if (search1.length > 0) {
+            for (var j = 0; j < search1.length; j++) {
+                if (!search1[j][1].startsWith("{{[[query]]")) {
+                    finalSearch1.push(j);
                 }
             }
         }
-        unreadCount1 = finalSearch.length - uiOffset1;
+        unreadCount1 = finalSearch1.length - uiOffset1;
     }
 
     if (unreadCount > 0) {
         if (uiMenu == false) {
-            var shortcutLinks = document.querySelector(".starred-pages").getElementsByTagName('a');
+            var shortcutLinks = document.querySelector(".starred-pages").getElementsByTagName("a");
             for (var i = 0; i < shortcutLinks.length; i++) {
                 if (shortcutLinks[i].outerText == uiTag) {
                     shortcutDIV = shortcutLinks[i].lastChild;
@@ -434,62 +492,74 @@ async function checkInbox(after, after1) {
             if (shortcutDIV == "undefined") {
                 alert("Please make sure that you have made a shortcut to the tag you want to monitor!");
             }
-            var shortcutLinks = document.querySelector(".starred-pages").getElementsByTagName('a');
         }
-        var span = document.createElement('span');
+        var span = document.createElement("span");
         span.id = "unreadBadge";
         span.innerHTML = "" + unreadCount;
-        if (!document.getElementById('unreadBadge')) {
+        if (!document.getElementById("unreadBadge")) {
+            span.classList.add("unread-badge");
+            span.style.color = uiTextColour;
+            span.style.backgroundColor = uiBGColour;
+            span.style.display = "";
             if (uiMenu == true) {
-                span.style = 'color: ' + uiTextColour + '; background-color: ' + uiBGColour + '; display: inline-flex; ';
                 document.getElementById("unreadDiv").appendChild(span);
             } else {
-                span.style = 'color: ' + uiTextColour + '; background-color: ' + uiBGColour + '; display: inline-flex; ';
                 if (shortcutDIV != undefined) {
                     shortcutDIV.appendChild(span);
                 }
             }
         } else {
-            document.getElementById('unreadBadge').style = 'color: ' + uiTextColour + '; background-color: ' + uiBGColour + '; display: inline-flex; ';
-            document.getElementById("unreadBadge").innerHTML = unreadCount;
+            const badge = document.getElementById("unreadBadge");
+            badge.style.color = uiTextColour;
+            badge.style.backgroundColor = uiBGColour;
+            badge.style.display = "";
+            badge.innerHTML = unreadCount;
         }
     } else {
-        if (document.getElementById('unreadBadge')) {
-            document.getElementById('unreadBadge').style = 'color: ' + uiTextColour + '; background-color: ' + uiBGColour + '; display: none; ';
+        if (document.getElementById("unreadBadge")) {
+            const badge = document.getElementById("unreadBadge");
+            badge.style.display = "none";
         }
     }
+
     if (unreadCount1 > 0 && uiSecondTag == true) {
         if (uiMenu1 == false) {
-            var shortcutLinks = document.querySelector(".starred-pages").getElementsByTagName('a');
-            for (var i = 0; i < shortcutLinks.length; i++) {
-                if (shortcutLinks[i].outerText == uiTag1) {
-                    shortcutDIV1 = shortcutLinks[i].lastChild;
+            var shortcutLinks1 = document.querySelector(".starred-pages").getElementsByTagName("a");
+            for (var k = 0; k < shortcutLinks1.length; k++) {
+                if (shortcutLinks1[k].outerText == uiTag1) {
+                    shortcutDIV1 = shortcutLinks1[k].lastChild;
                 }
             }
             if (shortcutDIV1 == "undefined") {
                 alert("Please make sure that you have made a shortcut to the tag you want to monitor!");
             }
         }
-        var span1 = document.createElement('span');
+        var span1 = document.createElement("span");
         span1.id = "unreadBadge1";
         span1.innerHTML = "" + unreadCount1;
-        if (!document.getElementById('unreadBadge1')) {
+        if (!document.getElementById("unreadBadge1")) {
+            span1.classList.add("unread-badge");
+            span1.style.color = uiTextColour1;
+            span1.style.backgroundColor = uiBGColour1;
+            span1.style.display = "";
             if (uiMenu1 == true) {
-                span1.style = 'color: ' + uiTextColour1 + '; background-color: ' + uiBGColour1 + '; display: inline-flex; ';
                 document.getElementById("unreadDiv1").appendChild(span1);
             } else {
-                span1.style = 'color: ' + uiTextColour1 + '; background-color: ' + uiBGColour1 + '; display: inline-flex; ';
                 if (shortcutDIV1 != undefined) {
                     shortcutDIV1.appendChild(span1);
                 }
             }
         } else {
-            document.getElementById('unreadBadge1').style = 'color: ' + uiTextColour1 + '; background-color: ' + uiBGColour1 + '; display: inline-flex;';
-            document.getElementById("unreadBadge1").innerHTML = unreadCount1;
+            const badge1 = document.getElementById("unreadBadge1");
+            badge1.style.color = uiTextColour1;
+            badge1.style.backgroundColor = uiBGColour1;
+            badge1.style.display = "";
+            badge1.innerHTML = unreadCount1;
         }
     } else {
-        if (document.getElementById('unreadBadge1')) {
-            document.getElementById('unreadBadge1').style = 'color: ' + uiTextColour1 + '; background-color: ' + uiBGColour1 + '; display: none;';
+        if (document.getElementById("unreadBadge1")) {
+            const badge1 = document.getElementById("unreadBadge1");
+            badge1.style.display = "none";
         }
     }
 }
@@ -505,11 +575,15 @@ async function goToPage(e) {
     } else if (e.metaKey) {
         ctrlButton = true;
     }
-    let uid = await window.roamAlphaAPI.q(`[:find ?uid :where [?e :node/title "${uiTag}"][?e :block/uid ?uid ] ]`)[0].toString();
+
+    let uid = await window.roamAlphaAPI
+        .q(`[:find ?uid :where [?e :node/title "${uiTag}"][?e :block/uid ?uid ] ]`)[0]
+        .toString();
+
     if (ctrlButton && shiftButton) {
-        window.roamAlphaAPI.ui.rightSidebar.addWindow({ window: { type: 'mentions', 'block-uid': uid } });
+        window.roamAlphaAPI.ui.rightSidebar.addWindow({ window: { type: "mentions", "block-uid": uid } });
     } else if (shiftButton) {
-        window.roamAlphaAPI.ui.rightSidebar.addWindow({ window: { type: 'outline', 'block-uid': uid } });
+        window.roamAlphaAPI.ui.rightSidebar.addWindow({ window: { type: "outline", "block-uid": uid } });
     } else {
         window.roamAlphaAPI.ui.mainWindow.openBlock({ block: { uid: uid } });
     }
@@ -520,9 +594,13 @@ async function goToPage1(e) {
     if (e.shiftKey) {
         shiftButton = true;
     }
-    let uid = await window.roamAlphaAPI.q(`[:find ?uid :where [?e :node/title "${uiTag1}"][?e :block/uid ?uid ] ]`)[0].toString();
+
+    let uid = await window.roamAlphaAPI
+        .q(`[:find ?uid :where [?e :node/title "${uiTag1}"][?e :block/uid ?uid ] ]`)[0]
+        .toString();
+
     if (shiftButton) {
-        window.roamAlphaAPI.ui.rightSidebar.addWindow({ window: { type: 'outline', 'block-uid': uid } });
+        window.roamAlphaAPI.ui.rightSidebar.addWindow({ window: { type: "outline", "block-uid": uid } });
     } else {
         window.roamAlphaAPI.ui.mainWindow.openBlock({ block: { uid: uid } });
     }
