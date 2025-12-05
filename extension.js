@@ -384,7 +384,7 @@ function createDIVs() {
         if (!document.getElementById("unreadDiv")) {
             var div = document.createElement("Div");
             div.classList.add("log-button");
-            div.innerHTML = uiTagName;
+            div.textContent = uiTagName;
             div.id = "unreadDiv";
             div.onclick = goToPage;
 
@@ -417,7 +417,7 @@ function createDIVs() {
         if (!document.getElementById("unreadDiv1")) {
             var div1 = document.createElement("Div");
             div1.classList.add("log-button");
-            div1.innerHTML = uiTagName1;
+            div1.textContent = uiTagName1;
             div1.id = "unreadDiv1";
             div1.onclick = goToPage1;
 
@@ -495,7 +495,7 @@ async function checkInbox(after, after1) {
         }
         var span = document.createElement("span");
         span.id = "unreadBadge";
-        span.innerHTML = "" + unreadCount;
+        span.textContent = "" + unreadCount;
         if (!document.getElementById("unreadBadge")) {
             span.classList.add("unread-badge");
             span.style.color = uiTextColour;
@@ -513,7 +513,7 @@ async function checkInbox(after, after1) {
             badge.style.color = uiTextColour;
             badge.style.backgroundColor = uiBGColour;
             badge.style.display = "";
-            badge.innerHTML = unreadCount;
+            badge.textContent = unreadCount;
         }
     } else {
         if (document.getElementById("unreadBadge")) {
@@ -536,7 +536,7 @@ async function checkInbox(after, after1) {
         }
         var span1 = document.createElement("span");
         span1.id = "unreadBadge1";
-        span1.innerHTML = "" + unreadCount1;
+        span1.textContent = "" + unreadCount1;
         if (!document.getElementById("unreadBadge1")) {
             span1.classList.add("unread-badge");
             span1.style.color = uiTextColour1;
@@ -554,7 +554,7 @@ async function checkInbox(after, after1) {
             badge1.style.color = uiTextColour1;
             badge1.style.backgroundColor = uiBGColour1;
             badge1.style.display = "";
-            badge1.innerHTML = unreadCount1;
+            badge1.textContent = unreadCount1;
         }
     } else {
         if (document.getElementById("unreadBadge1")) {
