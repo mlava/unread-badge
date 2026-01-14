@@ -43,7 +43,7 @@ export default {
                 {
                     id: "ui-menuicon",
                     name: "Icon for menu tag",
-                    description: "Which icon do you want to use if added to left sidebar menu? Lower case icon name from https://blueprintjs.com/docs/#icons.",
+                    description: "Which icon do you want to use if added to left sidebar menu? Lower case icon name from https://blueprintjs.com/docs/#icons. (See README if using Feather Icon Theme in Roam Studio.)",
                     action: {
                         type: "input",
                         placeholder: "inbox",
