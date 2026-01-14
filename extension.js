@@ -4,6 +4,7 @@ var uiMenu = false;
 var uiMenu1 = false;
 var uiSecondTag = false;
 var inboxInterval = 0;
+var featherObserver = null;
 
 export default {
     onload: ({ extensionAPI }) => {
@@ -194,6 +195,7 @@ export default {
         }
 
         createDIVs();
+        initFeatherIconObserver();
 
         // on update config
         function setUiTag(evt) {
@@ -356,6 +358,12 @@ export default {
             document.getElementById("unreadBadge1").remove();
         }
 
+        if (featherObserver) {
+            featherObserver.disconnect();
+            featherObserver = null;
+        }
+        document.documentElement.classList.remove("roamstudio-feather");
+
         window.roamAlphaAPI.data.removePullWatch(
             "[:block/_refs :block/uid :node/title]",
             `[:node/title "${uiTag}"]`,
@@ -368,6 +376,22 @@ export default {
         );
     }
 };
+
+function updateFeatherClass() {
+    var hasFeather = !!document.getElementById("roamstudio-css-feather-icons");
+    document.documentElement.classList.toggle("roamstudio-feather", hasFeather);
+}
+
+function initFeatherIconObserver() {
+    updateFeatherClass();
+    if (!window.MutationObserver) {
+        return;
+    }
+    if (!featherObserver) {
+        featherObserver = new MutationObserver(updateFeatherClass);
+        featherObserver.observe(document.head, { childList: true });
+    }
+}
 
 function createDIVs() {
     // Fallbacks: if no override name, use the tag itself
